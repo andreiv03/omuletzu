@@ -1,12 +1,18 @@
 const Discord = require("discord.js");
-const fs = require('fs');
-const { prefix } = require('../config.json');
+const Guild = require('../models/guild');
 
 module.exports = {
   name: 'help',
-  aliases: ['ajutor'],
+  aliases: ['cmds'],
   cooldown: 3,
-  execute(message, args, client) {
+  async execute(message, args, client) {
+    const settings = await Guild.findOne({
+      guildID: message.guild.id
+    }, (error) => {
+      if (error) console.error(error);
+    });
+    const prefix = settings.prefix;
+
     if (!args[0]) {
       const helpEmbed = {
         color: '#fcc95e',
@@ -19,12 +25,12 @@ module.exports = {
             inline: false 
           },
           {
-            name: '➔ Comenzi folositoare:',
+            name: '➔ Comenzi speciale:',
             value: `\`giveaway | invite\`\n`,
             inline: false 
           },
           {
-            name: '➔ Comenzi de moderare:',
+            name: '➔ Moderarea server-ului:',
             value: `\`ban | clearban | unban | kick | clear | prefix\`\n`,
             inline: false 
           },
@@ -35,16 +41,18 @@ module.exports = {
           },
           {
             name: '➔ Comenzi amuzante:',
-            value: `\`say | gay | simp | penis | iq | tall | trigger\`\n`,
+            value: `\`say | gay | simp | penis | iq | tall\`\n`,
             inline: false 
           }
         ]
       };
       message.channel.send({ embed: helpEmbed }).catch(error => console.error('Error: ', error));
     }
-    else if (args[0] == 'ghiceste' || args[0] == 'guess' || args[0] == 'spanzuratoarea' || args[0] == 'hangman') {
+
+    else if (args[0] == 'guess' || args[0] == 'hangman') {
       ;
     }
+    
     else {
       if (!client.commands.get(args[0].toLowerCase()))
         return message.reply(`nu există această comandă! Folosește \`${prefix}help\` pentru a vedea o listă cu toate comenzile disponibile.`);

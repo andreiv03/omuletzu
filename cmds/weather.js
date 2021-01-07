@@ -3,7 +3,6 @@ const weather = require('weather-js');
 
 module.exports = {
   name: 'weather',
-  aliases: ['vreme'],
   description: 'Afișează detalii despre vremea dintr-o zonă a lumii.',
   color: '#fcc95e',
   usage: '<zonă>',

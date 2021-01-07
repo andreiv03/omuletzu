@@ -1,6 +1,5 @@
 module.exports = {
   name: 'say',
-  aliases: ['spune'],
   description: `Pune-l pe Omuletzu' să citeze o frază aleasă de tine!`,
   color: '#f0549d',
   usage: '<orice frază>',

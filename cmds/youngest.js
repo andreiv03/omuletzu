@@ -3,7 +3,7 @@ const moment = require('moment');
 
 module.exports = {
   name: 'youngest',
-  description: 'Află care este cel mai tânăr membru al acestui server!',
+  description: 'Află care este cel mai tânăr membru al acestui server, în functie de creerea contului.',
   color: '#fcc95e',
   cooldown: 5,
   guildOnly: true,

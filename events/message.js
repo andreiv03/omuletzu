@@ -1,8 +1,30 @@
 const Discord = require('discord.js');
-const { prefix } = require('../config.json');
 const cooldowns = new Discord.Collection();
 
+const mongoose = require('mongoose');
+const Guild = require('../models/guild');
+
 module.exports = async (client, message) => {
+  // Server's database and prefix
+
+  const settings = await Guild.findOne({
+    guildID: message.guild.id
+  }, (error, guild) => {
+    if (error) console.error(error);
+    if (!guild) {
+      const newGuild = new Guild({
+        _id: mongoose.Types.ObjectId(),
+        guildID: message.guild.id,
+        guildName: message.guild.name,
+        prefix: process.env.PREFIX
+      });
+
+      newGuild.save().then(result => console.log(result)).catch(error => console.error(error));
+      return message.reply('acest server nu era adăugat în baza mea de date!\nDin acest moment poti folosi toate comenzile disponibile.');
+    }
+  });
+
+  const prefix = settings.prefix;
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
   // Get command's name and args

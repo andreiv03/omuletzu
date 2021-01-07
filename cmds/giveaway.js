@@ -5,6 +5,7 @@ module.exports = {
   name: 'giveaway',
   description: 'Crează un giveaway pentru membrii acestui server.',
   color: '#fcc95e',
+  permissions: ['Manage Server'],
   cooldown: 5,
   guildOnly: true,
   async execute(message, args, client) {
@@ -45,7 +46,7 @@ module.exports = {
               giveawayEnded: `${this.mention ? this.mention : ''}`,
               inviteToParticipate: "Reactionează cu :tada: pentru a participa!",
               timeRemaining: "Timp rămas: **{duration}**",
-              winMessage: "Felicitări, {winners}! Premiul este **{prize}**.",
+              winMessage: "Felicitări, {winners}!\nPremiul câștigat este **{prize}**",
               hostedBy: "Giveaway hostat de {user}",
               embedFooter: `Giveaway powered by Omuletzu'`,
               noWinner: "Nu am putut determina un câștigător!",

@@ -1,6 +1,6 @@
 module.exports = {
   name: 'clear',
-  aliases: ['sterge'],
+  aliases: ['delete'],
   description: 'Șterge un număr de mesaje.',
   color: '#f55656',
   usage: '<număr de mesaje>',

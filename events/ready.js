@@ -1,4 +1,4 @@
-const { prefix } = require('../config.json');
+const prefix = process.env.PREFIX;
 
 module.exports = client => {
   console.log(`Omuletzu' is online in ${client.guilds.cache.size} servers!`);

@@ -3,7 +3,7 @@ const moment = require('moment');
 
 module.exports = {
   name: 'oldest',
-  description: 'Află care este cel mai bătrân membru al acestui server!',
+  description: 'Află care este cel mai bătrân membru al acestui server, în functie de creerea contului.',
   color: '#fcc95e',
   cooldown: 5,
   guildOnly: true,

@@ -1,14 +1,22 @@
+const Discord = require("discord.js");
+
 module.exports = {
   name: 'ping',
   aliases: ['ms'],
   description: `Afișează ping-ul pe care bot-ul îl are în acest moment.`,
-  color: '#e8be3f',
+  color: '#fcc95e',
   cooldown: 15,
   guildOnly: false,
-  execute(message, args, client) {
-    message.channel.send('Calculez ping-ul...').then(msg => {
-      const ping = msg.createdTimestamp - message.createdTimestamp;
-      message.channel.send(`Bot Latency: ${ping}ms\nAPI Latency: ${client.ws.ping}ms`);
-    });
+  async execute(message, args, client) {
+    const pingEmbed = new Discord.MessageEmbed()
+      .setColor('#fcc95e')
+      .setTitle('Calculez ping-ul...');
+    const msg = await message.channel.send(pingEmbed);
+
+    pingEmbed.setColor('#fcc95e')
+      .setTitle('Ping calculat!')
+      .setDescription(`Bot Latency: **${Math.floor(msg.createdTimestamp - message.createdTimestamp)} ms** \nAPI Latency: **${Math.round(client.ws.ping)} ms**`);
+
+    msg.edit(pingEmbed);
   }
 }

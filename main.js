@@ -1,6 +1,15 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const { token } = require('./config.json');
+
+// Config file
+
+const { config } = require('dotenv');
+
+config({
+  path: `${__dirname}/.env`
+});
+
+// The client
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -50,7 +59,7 @@ fs.readdir('./events/', (error, files) => {
 // Login
 
 client.mongoose.init();
-client.login(token);
+client.login(process.env.TOKEN);
 
 
 

@@ -1,6 +1,5 @@
 module.exports = {
   name: 'invite',
-  aliases: ['invitatie'],
   description: `Afișează un link pentru a-l invita pe Omuletzu' pe server-ul tău.`,
   color: '#e8be3f',
   cooldown: 15,

@@ -3,7 +3,7 @@ const moment = require('moment');
 
 module.exports = {
   name: 'userinfo',
-  aliases: ['despre'],
+  aliases: ['uinfo'],
   description: 'Afișează informatii despre un membru din acest server.',
   color: '#fcc95e',
   usage: '<membru>',

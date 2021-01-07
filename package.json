@@ -12,6 +12,7 @@
     "canvacord": "^5.0.8",
     "discord-giveaways": "^4.4.2",
     "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
     "m": "^1.5.6",
     "moment": "^2.29.1",
     "mongoose": "^5.11.10",

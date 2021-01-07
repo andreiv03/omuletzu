@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = {
   name: 'penis',
-  aliases: ['howpenis'],
+  aliases: ['pp'],
   description: 'Cât de mare ai penisul?',
   color: '#f0549d',
   usage: '<membru>',
