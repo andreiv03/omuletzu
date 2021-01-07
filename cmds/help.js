@@ -1,31 +1,30 @@
 const Discord = require("discord.js");
 const fs = require('fs');
-
-const guessGame = require('./guess-game.js');
+const { prefix } = require('../config.json');
 
 module.exports = {
   name: 'help',
   aliases: ['ajutor'],
   cooldown: 3,
   execute(message, args, client) {
-    let prefixes = JSON.parse(fs.readFileSync('./prefixes.json', 'utf8'));
-    let prefix;
-    if (message.channel.type !== 'dm')
-      prefix = prefixes[message.guild.id].prefixes;
-    //console.log(guessGame.code);
     if (!args[0]) {
       const helpEmbed = {
         color: '#fcc95e',
-        title: `➔ Comenzile lui Omuletzu'`,
+        title: `➔ Comenzile disponibile ale lui Omuletzu'`,
         description: `Scrie în chat \`${prefix}help <nume comandă>\` pentru a afla mai multe detalii despre o comandă!`,
         fields: [
           {
-            name: '➔ Informatii generale:',
-            value: `\`userinfo | serverinfo | weather | invite | ping\`\n`,
+            name: '➔ Comenzi generale:',
+            value: `\`userinfo | serverinfo | weather | oldest | youngest | ping\`\n`,
             inline: false 
           },
           {
-            name: '➔ Administrare și moderare:',
+            name: '➔ Comenzi folositoare:',
+            value: `\`giveaway | invite\`\n`,
+            inline: false 
+          },
+          {
+            name: '➔ Comenzi de moderare:',
             value: `\`ban | clearban | unban | kick | clear | prefix\`\n`,
             inline: false 
           },
