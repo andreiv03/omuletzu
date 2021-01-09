@@ -16,19 +16,8 @@ module.exports = {
 
     const settings = await Guild.findOne({
       guildID: message.guild.id
-    }, (error, guild) => {
+    }, (error) => {
       if (error) console.error(error);
-      if (!guild) {
-        const newGuild = new Guild({
-          _id: mongoose.Types.ObjectId(),
-          guildID: message.guild.id,
-          guildName: message.guild.name,
-          prefix: process.env.PREFIX
-        });
-
-        newGuild.save().then(result => console.log(result)).catch(error => console.error(error));
-        return message.reply('acest server nu era adăugat în baza mea de date. Scrie din nou comanda!');
-      }
     });
 
     if (!args[0])
@@ -36,7 +25,7 @@ module.exports = {
     
     await settings.updateOne({
       prefix: args[0]
-    });
+    }).catch(error => console.error(error));
 
     return message.channel.send(`Comanda a fost executată cu succes!\nNoul prefix al bot-ului <@747112444253700147> este \`${args[0]}\``);
   }

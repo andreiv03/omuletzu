@@ -11,12 +11,15 @@ module.exports = async (client, message) => {
     guildID: message.guild.id
   }, (error, guild) => {
     if (error) console.error(error);
+    
     if (!guild) {
       const newGuild = new Guild({
         _id: mongoose.Types.ObjectId(),
         guildID: message.guild.id,
         guildName: message.guild.name,
-        prefix: process.env.PREFIX
+        prefix: process.env.PREFIX,
+        logsChannelID: null,
+        cases: 0
       });
 
       newGuild.save().then(result => console.log(result)).catch(error => console.error(error));

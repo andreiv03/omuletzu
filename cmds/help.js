@@ -21,17 +21,17 @@ module.exports = {
         fields: [
           {
             name: '➔ Comenzi generale:',
-            value: `\`userinfo | serverinfo | weather | oldest | youngest | ping\`\n`,
+            value: `\`userinfo | serverinfo | weather | oldest | youngest | ping | invite\`\n`,
             inline: false 
           },
           {
             name: '➔ Comenzi speciale:',
-            value: `\`giveaway | invite\`\n`,
+            value: `\`giveaway\`\n`,
             inline: false 
           },
           {
-            name: '➔ Moderarea server-ului:',
-            value: `\`ban | clearban | unban | kick | clear | prefix\`\n`,
+            name: '➔ Moderarea și administrarea server-ului:',
+            value: `\`logschannel | ban | clearban | unban | kick | clear | prefix\`\n`,
             inline: false 
           },
           {

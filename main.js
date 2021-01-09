@@ -83,4 +83,11 @@ client.login(process.env.TOKEN);
 /*const GuessGame = require('./cmds/guess-game.js');
 const guessGame = new GuessGame(client);
 const HangmanGame = require('./cmds/hangman-game.js');
-const hangmanGame = new HangmanGame(client);*/
+const hangmanGame = new HangmanGame(client);
+
+
+
+
+
+*/
+

@@ -5,6 +5,7 @@ module.exports = {
   cooldown: 15,
   guildOnly: false,
   execute(message) {
+    console.log(message.member.user.tag);
     return message.channel.send('<https://discord.com/api/oauth2/authorize?client_id=747112444253700147&permissions=8&scope=bot>');
   }
 };
