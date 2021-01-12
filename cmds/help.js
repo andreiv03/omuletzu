@@ -5,6 +5,7 @@ module.exports = {
   name: 'help',
   aliases: ['cmds'],
   cooldown: 3,
+  guildOnly: false,
   async execute(message, args, client) {
     const settings = await Guild.findOne({
       guildID: message.guild.id
@@ -31,7 +32,7 @@ module.exports = {
           },
           {
             name: '➔ Moderarea și administrarea server-ului:',
-            value: `\`logschannel | ban | clearban | unban | kick | clear | prefix\`\n`,
+            value: `\`logschannel | ban | clearban | unban | kick | warn | warns | removewarn | maxwarns | clear | prefix\`\n`,
             inline: false 
           },
           {
@@ -46,16 +47,9 @@ module.exports = {
           }
         ]
       };
-      message.channel.send({ embed: helpEmbed }).catch(error => console.error('Error: ', error));
-    }
-
-    else if (args[0] == 'guess' || args[0] == 'hangman') {
-      ;
-    }
-    
-    else {
-      if (!client.commands.get(args[0].toLowerCase()))
-        return message.reply(`nu există această comandă! Folosește \`${prefix}help\` pentru a vedea o listă cu toate comenzile disponibile.`);
+      return message.channel.send({ embed: helpEmbed }).catch(error => console.error(error));
+    } else {
+      if (!client.commands.get(args[0].toLowerCase())) return message.reply(`nu există această comandă! Folosește \`${prefix}help\` pentru a vedea o listă cu toate comenzile disponibile.`);
 
       const commandName = args[0].toLowerCase();
       const command = client.commands.get(commandName);

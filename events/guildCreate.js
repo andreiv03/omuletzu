@@ -8,7 +8,8 @@ module.exports = async (client, guild) => {
     guildName: guild.name,
     prefix: process.env.PREFIX,
     logsChannelID: null,
-    cases: 0
+    cases: 0,
+    maxWarns: 10
   });
 
   guild.save().then(result => console.log(result)).catch(error => console.error(error));

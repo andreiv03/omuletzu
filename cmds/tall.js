@@ -17,8 +17,8 @@ module.exports = {
       .setColor('RANDOM')
       .setTitle('Cât de înalt ești?')
       .setDescription(`${member} are ${number.toFixed(2)} metri! :ladder:`)
-      .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
+      .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 
-    message.channel.send(tallEmbed).catch(error => console.error('Error: ', error));
+    message.channel.send(tallEmbed).catch(error => console.error(error));
   }
 };

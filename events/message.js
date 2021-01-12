@@ -7,27 +7,33 @@ const Guild = require('../models/guild');
 module.exports = async (client, message) => {
   // Server's database and prefix
 
-  const settings = await Guild.findOne({
-    guildID: message.guild.id
-  }, (error, guild) => {
-    if (error) console.error(error);
-    
-    if (!guild) {
-      const newGuild = new Guild({
-        _id: mongoose.Types.ObjectId(),
-        guildID: message.guild.id,
-        guildName: message.guild.name,
-        prefix: process.env.PREFIX,
-        logsChannelID: null,
-        cases: 0
-      });
+  let prefix = process.env.PREFIX
 
-      newGuild.save().then(result => console.log(result)).catch(error => console.error(error));
-      return message.reply('acest server nu era adăugat în baza mea de date!\nDin acest moment poti folosi toate comenzile disponibile.');
-    }
-  });
+  if (message.channel.type !== 'dm') {
+    const settings = await Guild.findOne({
+      guildID: message.guild.id
+    }, (error, guild) => {
+      if (error) console.error(error);
+      
+      if (!guild) {
+        const newGuild = new Guild({
+          _id: mongoose.Types.ObjectId(),
+          guildID: message.guild.id,
+          guildName: message.guild.name,
+          prefix: process.env.PREFIX,
+          logsChannelID: null,
+          cases: 0,
+          maxWarns: 10
+        });
 
-  const prefix = settings.prefix;
+        newGuild.save().then(result => console.log(result)).catch(error => console.error(error));
+        return message.reply('acest server nu era adăugat în baza mea de date!\nDin acest moment poti folosi toate comenzile disponibile.');
+      }
+    });
+
+    prefix = settings.prefix;
+  }
+
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
   // Get command's name and args
@@ -42,26 +48,20 @@ module.exports = async (client, message) => {
 
   // GuildOnly property
 
-  if (command.guildOnly && message.channel.type === 'dm') {
-    return message.reply('Nu pot executa această comandă în DM-uri!');
-  }
+  if (command.guildOnly && message.channel.type === 'dm') return message.reply('Nu pot executa această comandă în DM-uri!');
 
   // Command usage
 
   if (command.args && !args.length) {
     let reply = `Comanda este incompletă, ${message.author}!`;
-    if (command.usage) {
-      reply += `\nModul corect de folosire al comenzii este \`${prefix}${command.name} ${command.usage}\`.`;
-    }
+    if (command.usage) reply += `\nModul corect de folosire al comenzii este \`${prefix}${command.name} ${command.usage}\``;
     return message.channel.send(reply);
   }
 
   // Cooldowns
 
-  if (!cooldowns.has(command.name)) {
-    cooldowns.set(command.name, new Discord.Collection());
-  }
-  
+  if (!cooldowns.has(command.name)) cooldowns.set(command.name, new Discord.Collection());
+
   const now = Date.now();
   const timestamps = cooldowns.get(command.name);
   const cooldownAmount = (command.cooldown || 3) * 1000;
@@ -84,6 +84,6 @@ module.exports = async (client, message) => {
     command.execute(message, args, client);
   } catch (error) {
     console.error(error);
-    message.reply('a apărut o eroare la rularea acestei comenzi. Mai încearcă o dată!');
+    return message.reply('a apărut o eroare la rularea acestei comenzi. Mai încearcă o dată!');
   }
 };

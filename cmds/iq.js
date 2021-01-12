@@ -17,8 +17,8 @@ module.exports = {
       .setColor('RANDOM')
       .setTitle('Cât de mare ai IQ-ul?')
       .setDescription(`${member} are ${number} IQ! :brain:`)
-      .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
+      .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 
-    message.channel.send(iqEmbed).catch(error => console.error('Error: ', error));
+    message.channel.send(iqEmbed).catch(error => console.error(error));
   }
 };

@@ -13,13 +13,13 @@ module.exports = {
     const oldestEmbed = new Discord.MessageEmbed()
       .setColor('#fcc95e')
       .setTitle(`${moment(member.user.createdAt).format('LLLL')}`)
-      .setDescription(`**${member.user.username}#${member.user.discriminator}** este cel mai tânăr membru al acestui server!`)
-      .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
+      .setDescription(`${member} este cel mai tânăr membru al acestui server!`)
+      .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 
     if (message.guild.iconURL()) 
       oldestEmbed.setFooter(`${message.guild.name}`, message.guild.iconURL({ dynamic: true }));
     else oldestEmbed.attachFiles(['./imgs/discord-logo.png']).setFooter(`${message.guild.name}`, 'attachment://discord-logo.png');
 
-    message.channel.send(oldestEmbed).catch(error => console.error('Error: ', error));
+    return message.channel.send(oldestEmbed).catch(error => console.error(error));
   }
 };

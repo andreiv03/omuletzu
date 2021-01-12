@@ -17,8 +17,8 @@ module.exports = {
       .setColor('RANDOM')
       .setTitle('Cât la sută ești gay?')
       .setDescription(`${member} este ${percent}% gay! :rainbow_flag:`)
-      .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
+      .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 
-    message.channel.send(gayEmbed).catch(error => console.error('Error: ', error));
+    message.channel.send(gayEmbed).catch(error => console.error(error));
   }
 };

@@ -28,7 +28,7 @@ module.exports = {
         `**Nume:** ${member.user.username}`,
         `**Tag:** #${member.user.discriminator}`,
         `**ID:** ${member.id}`,
-        `**Avatar:** [LINK](${member.user.displayAvatarURL({ dynamic: true, size: 512 })})`,
+        `**Avatar:** [LINK](${member.user.displayAvatarURL({ dynamic: true })})`,
         `**Creare cont:** ${moment(member.user.createdTimestamp).format('LL')}, ${moment(member.user.createdTimestamp).fromNow()}`,
         `\u200b`
       ], true)
@@ -44,9 +44,9 @@ module.exports = {
       ])
 
     if (member.user.displayAvatarURL()) 
-      statsEmbed.setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }));
+      statsEmbed.setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
     else statsEmbed.attachFiles(['./imgs/discord-logo.png']).setThumbnail('attachment://discord-logo.png');
 
-    message.channel.send({ embed: statsEmbed });
+    return message.channel.send(statsEmbed);
   }
 };

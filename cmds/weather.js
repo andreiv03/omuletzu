@@ -9,15 +9,10 @@ module.exports = {
   cooldown: 5,
   args: true,
   execute(message, args) {
-    let area = args[0], k = 1;
-    while (args[k]) {
-      area += ' ' + args[k];
-      k++;
-    }
+    let area = args.join(' ');
 
     weather.find({ search: area, degreeType: 'C' }, function(error, result) {
-      if (error || result === undefined || result.length === 0)
-        return message.reply('nu cunosc această zonă.');
+      if (error || result === undefined || result.length === 0) return message.reply('nu cunosc această zonă.');
       
       let current = result[0].current;
       let location = result[0].location;
@@ -32,16 +27,17 @@ module.exports = {
       else if (current.temperature <= 30) color = '#eb8831';
       else color = '#e81c1c';
 
-      const embed = new Discord.MessageEmbed()
+      const weatherEmbed = new Discord.MessageEmbed()
         .setAuthor(current.observationpoint)
         .setDescription(`${current.day}, ${current.observationtime}\n${current.skytext}, \`${current.temperature}°\``)
         .setThumbnail(current.imageUrl)
         .setColor(color);
       
-      embed.addField('Umiditate:', `${current.humidity}%`, true)
+      weatherEmbed.addField('Umiditate:', `${current.humidity}%`, true)
         .addField('Vânturi:', current.winddisplay, true)
         .addField('Fus orar:', `UTC ${sign}${location.timezone}`, true);
-      return message.channel.send(embed);
+
+      return message.channel.send(weatherEmbed);
     });
   }
 };

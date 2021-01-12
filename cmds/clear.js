@@ -9,22 +9,19 @@ module.exports = {
   args: true,
   guildOnly: true,
   execute(message, args) {
-    if (!message.member.hasPermission('MANAGE_MESSAGES')) {
-      return message.reply('nu ai permisiunile necesare pentru a folosi această comandă!');
-    }
-    else {
-      const amount = parseInt(args[0]) + 1;
+    if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('nu ai permisiunile necesare pentru a folosi această comandă!');
 
-      if (isNaN(amount)) {
-        return message.reply('nu ai introdus un număr corect. Încearcă din nou!');
-      } else if (amount <= 1 || amount > 100) {
-        return message.reply('poti șterge maxim 99 de mesaje deodată!');
-      }
+    const amount = parseInt(args[0]) + 1;
 
-      message.channel.bulkDelete(amount, true).catch(error => {
-        console.error(error);
-        message.channel.send('Tocmai a apărut o eroare la rularea acestei comenzi. Mai încearcă o dată!');
-      });
+    if (isNaN(amount) || amount <= 1) {
+      return message.reply('nu ai introdus un număr valid!');
+    } else if (amount > 100) {
+      return message.reply('poti șterge maxim 99 de mesaje deodată!');
     }
+
+    message.channel.bulkDelete(amount, true).catch(error => {
+      console.error(error);
+      message.channel.send('Tocmai a apărut o eroare la rularea acestei comenzi. Mai încearcă o dată!');
+    });
   }
 };

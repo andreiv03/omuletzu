@@ -3,6 +3,7 @@ module.exports = {
   args: true,
   execute(message, args) {
     if (message.author.id != '500403270888456214') return message.reply('nu poti folosi această comandă!');
+
     const commandName = args[0].toLowerCase();
     const command = message.client.commands.get(commandName) || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
@@ -13,10 +14,10 @@ module.exports = {
     try {
       const newCommand = require(`./${command.name}.js`);
       message.client.commands.set(newCommand.name, newCommand);
-      message.channel.send(`Comanda \`${commandName}\` a fost reîncărcată cu succes!`);
+      return message.channel.send(`Comanda \`${commandName}\` a fost reîncărcată cu succes!`);
     } catch (error) {
       console.log(error);
-      message.channel.send(`A apărut o eroare la reîncărcarea comenzii \`${command.name}\`.`);
+      return message.channel.send(`A apărut o eroare la reîncărcarea comenzii \`${command.name}\`!`);
     }
   }
 };

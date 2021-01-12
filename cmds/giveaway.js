@@ -9,9 +9,7 @@ module.exports = {
   cooldown: 5,
   guildOnly: true,
   async execute(message, args, client) {
-    if (!message.member.hasPermission('MANAGE_GUILD')) {
-      return message.reply('nu ai permisiunile necesare pentru a folosi această comandă!');
-    }
+    if (!message.member.hasPermission('MANAGE_GUILD')) return message.reply('nu ai permisiunile necesare pentru a folosi această comandă!');
 
     class Giveaway {
       constructor() {

@@ -23,6 +23,6 @@ module.exports = {
     });
     mongoose.connection.on('disconnected', () => {
       console.warn('Mongoose connection lost!');
-    })
+    });
   }
 }

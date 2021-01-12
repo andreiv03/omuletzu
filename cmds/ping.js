@@ -11,12 +11,13 @@ module.exports = {
     const pingEmbed = new Discord.MessageEmbed()
       .setColor('#fcc95e')
       .setTitle('Calculez ping-ul...');
+      
     const msg = await message.channel.send(pingEmbed);
 
     pingEmbed.setColor('#fcc95e')
       .setTitle('Ping calculat!')
       .setDescription(`Bot Latency: **${Math.floor(msg.createdTimestamp - message.createdTimestamp)} ms** \nAPI Latency: **${Math.round(client.ws.ping)} ms**`);
 
-    msg.edit(pingEmbed);
+    return msg.edit(pingEmbed);
   }
 }

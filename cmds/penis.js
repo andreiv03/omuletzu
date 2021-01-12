@@ -11,6 +11,7 @@ module.exports = {
   guildOnly: true,
   execute(message, args) {
     const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member;
+
     let cm = Math.floor(Math.random() * 26), cmCopy = cm;
     let width = '8', reply;
     if (cmCopy == 0) reply = `Coaie... Ăsta nu e penis!\n${member}, ai `
@@ -28,9 +29,9 @@ module.exports = {
       .setColor('RANDOM')
       .setTitle(`Cât de mare ai penisul?`)
       .setDescription(`${reply}${cmCopy >= 20 ? cmCopy + ' de': cmCopy} cm. :banana:`)
-      .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
+      .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
       .setFooter(`${width}`)
 
-    message.channel.send(penisEmbed).catch(error => console.error('Error: ', error));
+    message.channel.send(penisEmbed).catch(error => console.error(error));
   }
 };

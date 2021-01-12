@@ -12,25 +12,26 @@ const regions = {
 	southafrica: 'South Africa',
 	sydeny: 'Sydeny',
 	'us-central': 'US Central',
-	'us-east': 'US East',
-	'us-west': 'US West',
-	'us-south': 'US South'
+  'us-east': 'US East',
+  'us-south': 'US South',
+	'us-west': 'US West'
 };
 
 module.exports = {
   name: 'serverinfo',
   aliases: ['sinfo'],
   description: 'Afișează detaliile generale ale acestui server.',
-  category: ':bulb: Informatii generale',
   color: '#fcc95e',
   cooldown: 5,
   guildOnly: true,
   execute(message) {
     const members = message.guild.members.cache;
-    const roles = message.guild.roles.cache.sort((a, b) => b.position - a.position).map(role => !role.managed ? role.toString() : 'N/A');
-    let serverRoles = [], i = 0, k = roles.length - 10;
+
+    const roles = message.guild.roles.cache.sort((a, b) => b.position - a.position).map(role => !role.managed ? role.toString() : 'N/A').slice(0, -1);
+    let serverRoles = [], i = 0, k = roles.length - 10, botRoles = 0;
     for (const value of roles) {
-      if (value != 'N/A' && value != '@everyone') serverRoles[i++] = value;
+      if (value != 'N/A') serverRoles[i++] = value;
+      else botRoles++;
       if (i > 9) break;
     }
     if (i == 10) serverRoles[i] = `și alte ${k} roluri.`
@@ -61,13 +62,13 @@ module.exports = {
         `**Emoji-uri animate:** ${message.guild.emojis.cache.filter(emoji => emoji.animated).size}`,
         `**Canale de tip text:** ${message.guild.channels.cache.filter(channel => channel.type == 'text').size}`,
         `**Canale de tip voice:** ${message.guild.channels.cache.filter(channel => channel.type == 'voice').size}`,
-        `**Roluri [${roles.length}]:** ${serverRoles.join(', ')}`,
+        `**Roluri [${roles.length - botRoles}]:** ${serverRoles.join(', ')}`,
       ], false);
 
     if (message.guild.iconURL()) 
       infoEmbed.setThumbnail(message.guild.iconURL({ dynamic: true }));
     else infoEmbed.attachFiles(['./imgs/discord-logo.png']).setThumbnail('attachment://discord-logo.png');
 
-    message.channel.send(infoEmbed);
+    return message.channel.send(infoEmbed);
   }
 };

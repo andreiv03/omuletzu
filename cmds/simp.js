@@ -17,8 +17,8 @@ module.exports = {
       .setColor('RANDOM')
       .setTitle('Cât la sută ești simp?')
       .setDescription(`${member} este ${percent}% simp! :clown:`)
-      .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
+      .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 
-    message.channel.send(simpEmbed).catch(error => console.error('Error: ', error));
+    message.channel.send(simpEmbed).catch(error => console.error(error));
   }
 };

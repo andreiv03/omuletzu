@@ -1,7 +1,7 @@
 {
   "name": "omuletzu",
   "version": "1.0.0",
-  "description": "This is a Discord bot.",
+  "description": "This is my Discord bot.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +9,6 @@
   "author": "Andrei Voicu",
   "license": "ISC",
   "dependencies": {
-    "canvacord": "^5.0.8",
     "discord-giveaways": "^4.4.2",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",

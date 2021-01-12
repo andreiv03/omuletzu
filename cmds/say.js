@@ -7,21 +7,20 @@ module.exports = {
   guildOnly: true,
   execute(message, args) {
     message.channel.bulkDelete(1, true).catch(error => console.log(error));
+
     if (!args[0]) return message.reply('trebuie să spui ceva!');
-    if (message.mentions.everyone) return message.reply('nu poti mentiona acest rol!');
+    if (message.mentions.everyone) return message.reply('nu poti mentiona un rol!');
 
-    let title = '', k = Math.floor(Math.random() * 2);
-    if (k == 0) title = `Ultimele cuvinte ale lui ${message.author.username} au fost:`;
-    else if (k == 1) title = `Demult, pe un tărâm îndepărtat, eu, ${message.author.username}, am spus:`; 
+    const channels = message.mentions.channels.first();
+    if (channels) return message.reply('nu poti mentiona un canal!');
 
-    let text = `**` + title + ` **\n"`, i = 0;
-    while (args[i]) {
-      text += args[i] + ' ';
-      i++;
-    }
-    text = text.slice(0, -1);
-    text += `"`;
+    const roles = message.mentions.roles.first();
+    if (roles) return message.reply('nu poti mentiona un rol!');
 
-    return message.channel.send(text); 
+    let title = `**${message.author.tag} a spus:**\n"`;
+    let text = args.join(' ') + '"';
+    title += text;
+
+    return message.channel.send(title); 
   }
 }
