@@ -4,6 +4,7 @@ const Guild = require('../models/guild');
 module.exports = {
   name: 'help',
   aliases: ['cmds'],
+  color: '#fcc95e',
   cooldown: 3,
   guildOnly: false,
   async execute(message, args, client) {
@@ -37,7 +38,7 @@ module.exports = {
           },
           {
             name: '➔ Jocuri:',
-            value: `\`guess | hangman\`\n`,
+            value: `\`leaderboard | guess | hangman\`\n`,
             inline: false 
           },
           {
@@ -72,6 +73,10 @@ module.exports = {
             permissions += `${permission}\n`;
           });
           commandEmbed.addField('Permisiuni necesare:', `\`\`\`${permissions}\`\`\``);
+        }
+        if (command.cooldown) {
+          const commandCooldown = command.cooldown >= 20 ? command.cooldown + ' de secunde' : command.cooldown + ' secunde';
+          commandEmbed.addField('Cooldown:', `\`\`\`${commandCooldown}\`\`\``);
         }
         if (command.color) commandEmbed.setColor(`${command.color}`);
       }

@@ -5,7 +5,7 @@ module.exports = {
   name: 'oldest',
   description: 'Află care este cel mai bătrân membru al acestui server, în functie de creerea contului.',
   color: '#fcc95e',
-  cooldown: 5,
+  cooldown: 10,
   guildOnly: true,
   execute(message) {
     const member = message.guild.members.cache.filter(m => !m.user.bot).sort((a, b) => a.user.createdAt - b.user.createdAt).first();

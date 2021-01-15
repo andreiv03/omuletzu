@@ -5,7 +5,8 @@ const userSchema = mongoose.Schema({
   guildID: String,
   userID: String,
   warns: [Object],
-  mute: Object
+  guessGame: Number,
+  hangmanGame: Number
 });
 
 module.exports = mongoose.model('User', userSchema, 'users');

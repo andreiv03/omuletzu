@@ -45,7 +45,8 @@ module.exports = {
           guildID: message.guild.id,
           userID: member.id,
           warns: [],
-          mute: null
+          guessGame: 0,
+          hangmanGame: 0
         });
 
         await newUser.save().catch(error => console.error(error));

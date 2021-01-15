@@ -1,4 +1,3 @@
-const { set } = require('mongoose');
 const Guild = require('../models/guild');
 
 module.exports = {

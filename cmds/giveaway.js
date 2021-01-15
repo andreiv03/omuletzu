@@ -6,7 +6,7 @@ module.exports = {
   description: 'Crează un giveaway pentru membrii acestui server.',
   color: '#fcc95e',
   permissions: ['Manage Server'],
-  cooldown: 5,
+  cooldown: 15,
   guildOnly: true,
   async execute(message, args, client) {
     if (!message.member.hasPermission('MANAGE_GUILD')) return message.reply('nu ai permisiunile necesare pentru a folosi această comandă!');

@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const mongoose = require('mongoose');
 const Guild = require('../models/guild');
-const user = require('../models/user');
 const User = require('../models/user');
 
 module.exports = {
@@ -62,7 +61,8 @@ module.exports = {
           guildID: message.guild.id,
           userID: member.id,
           warns: [warning],
-          mute: null
+          guessGame: 0,
+          hangmanGame: 0
         });
 
         await newUser.save().catch(error => console.error(error));

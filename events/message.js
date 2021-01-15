@@ -71,7 +71,7 @@ module.exports = async (client, message) => {
 
     if (now < expirationTime) {
       const timeLeft = (expirationTime - now) / 1000;
-      return message.reply(`trebuie să mai aștepti ${timeLeft.toFixed(2)} secunde pentru a folosi comanda \`${command.name}\`.`);
+      return message.reply(`trebuie să mai aștepti ${timeLeft.toFixed(2)} secunde pentru a folosi comanda \`${command.name}\``);
     }
   }
 

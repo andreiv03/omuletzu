@@ -50,7 +50,7 @@ module.exports = {
         guildID: message.guild.id,
       }, async (error, users) => {
         if (error) console.error(error);
-        console.log(users);
+
         users.sort((a, b) => b.warns.length - a.warns.length).map(user => {
           if (user.warns && user.warns.length > 0) {
             k = k + 1;

@@ -5,4 +5,4 @@ module.exports = client => {
   
   let status = `${prefix}help | ${prefix}invite | ${client.guilds.cache.size} servers`;
   client.user.setActivity(status, { type: 'PLAYING' });
-}
+};

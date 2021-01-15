@@ -7,7 +7,7 @@ module.exports = {
   color: '#f55656',
   usage: '<canal>',
   permissions: ['Manage Server'],
-  cooldown: 5,
+  cooldown: 15,
   args: true,
   guildOnly: true,
   async execute(message, args) {
