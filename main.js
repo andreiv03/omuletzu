@@ -15,13 +15,15 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.mongoose = require('./utils/mongoose.js');
 
-// Get all commands
+// Get the commands
 
-const commandFiles = fs.readdirSync('./cmds').filter(file => file.endsWith('.js'));
-for (const file of commandFiles) {
-  const command = require(`./cmds/${file}`);
-  client.commands.set(command.name, command);
-}
+fs.readdirSync('./cmds').forEach(dir => {
+  const commandfiles = fs.readdirSync(`./cmds/${dir}`).filter(file => file.endsWith('.js'));
+  for (const file of commandfiles) {
+    const command = require(`./cmds/${dir}/${file}`);
+    client.commands.set(command.name, command);
+  }
+});
 
 // Giveaways
 
@@ -48,6 +50,7 @@ process.on('unhandledRejection', error => {
 
 fs.readdir('./events/', (error, files) => {
   if (error) return console.error;
+
   files.forEach(file => {
       if (!file.endsWith('.js')) return;
       const event = require(`./events/${file}`);
@@ -60,34 +63,3 @@ fs.readdir('./events/', (error, files) => {
 
 client.mongoose.init();
 client.login(process.env.TOKEN);
-
-
-
-
-
-
-
-// Games
-
-  /*if (message.channel.type !== 'dm') {
-    if (message.content.toLowerCase() === `${prefix}guess` || message.content.toLowerCase() === `${prefix}ghiceste`) 
-      guessGame.newGame(message, message.member);
-    if (message.content.toLowerCase() === `${prefix}hangman` || message.content.toLowerCase() === `${prefix}spanzuratoarea`) 
-      hangmanGame.newGame(message, message.member);
-  }*/
-
-
-
-  // Games
-
-/*const GuessGame = require('./cmds/guess-game.js');
-const guessGame = new GuessGame(client);
-const HangmanGame = require('./cmds/hangman-game.js');
-const hangmanGame = new HangmanGame(client);
-
-
-
-
-
-*/
-

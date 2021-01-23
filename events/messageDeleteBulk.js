@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = async (client, messages) => {
   const bulkEmbed = new Discord.MessageEmbed()
-    .setTitle(':tools: Mesaje șterse de la:')
+    .setTitle('Mesaje șterse de la:')
     .setColor('#f55656')
     .setFooter('Acest mesaj se va șterge automat după 5 secunde.')
 

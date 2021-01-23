@@ -9,6 +9,7 @@
   "author": "Andrei Voicu",
   "license": "ISC",
   "dependencies": {
+    "canvacord": "^5.0.8",
     "discord-giveaways": "^4.4.2",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",

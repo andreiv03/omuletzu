@@ -7,10 +7,10 @@ const Guild = require('../models/guild');
 module.exports = async (client, message) => {
   // Server's database and prefix
 
-  let prefix = process.env.PREFIX
+  let prefix = process.env.PREFIX, settings;
 
   if (message.channel.type !== 'dm') {
-    const settings = await Guild.findOne({
+    settings = await Guild.findOne({
       guildID: message.guild.id
     }, (error, guild) => {
       if (error) console.error(error);
@@ -22,19 +22,30 @@ module.exports = async (client, message) => {
           guildName: message.guild.name,
           prefix: process.env.PREFIX,
           logsChannelID: null,
+          modRoles: [],
           cases: 0,
-          maxWarns: 10
+          maxWarns: 10,
+          wordChainChannelID: null,
+          wordChainCurrentWord: null,
+          wordChainCurrentWinner: null
         });
 
         newGuild.save().then(result => console.log(result)).catch(error => console.error(error));
-        return message.reply('acest server nu era adăugat în baza mea de date!\nDin acest moment poti folosi toate comenzile disponibile.');
       }
     });
 
-    prefix = settings.prefix;
+    if (settings) prefix = settings.prefix;
   }
 
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+  // Check if the message starts with prefix. Otherwise, check for any available game.
+
+  if (!message.content.startsWith(prefix) || message.author.bot) {
+    if (!message.author.bot && settings && settings.wordChainChannelID == message.channel.id) {
+      const WordChain = require('../cmds/games/wordchain-game.js');
+      WordChain.execute(message);
+    }
+    return;
+  }
 
   // Get command's name and args
 
@@ -71,7 +82,7 @@ module.exports = async (client, message) => {
 
     if (now < expirationTime) {
       const timeLeft = (expirationTime - now) / 1000;
-      return message.reply(`trebuie să mai aștepti ${timeLeft.toFixed(2)} secunde pentru a folosi comanda \`${command.name}\``);
+      return message.reply(`trebuie să mai aștepti ${timeLeft.toFixed(2)} secunde pentru a folosi comanda \`${prefix}${command.name}\`!`);
     }
   }
 

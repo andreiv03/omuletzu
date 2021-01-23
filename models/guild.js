@@ -6,8 +6,12 @@ const guildSchema = mongoose.Schema({
   guildName: String,
   prefix: String,
   logsChannelID: String,
+  modRoles: Array,
   cases: Number,
-  maxWarns: Number
+  maxWarns: Number,
+  wordChainChannelID: String,
+  wordChainCurrentWord: String,
+  wordChainCurrentWinner: String
 });
 
 module.exports = mongoose.model('Guild', guildSchema, 'guilds');
