@@ -3,14 +3,14 @@ import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.j
 export default {
   data: new SlashCommandBuilder()
     .setName("percentage")
-    .setDescription("Cât la sută?")
+    .setDescription("Cât la sută ești...?")
     .addStringOption(option =>
       option.setName("type")
-        .setDescription("Ce fel de procentaj?")
+        .setDescription("Alege o opțiune!")
         .setRequired(true)
         .addChoices(
           { name: "gay", value: "gay" },
-          { name: "simp", value: "simp"}
+          { name: "simp", value: "simp" }
         )),
   execute: async (interaction: CommandInteraction) => {
     const percentage = Math.floor(Math.random() * 101);
@@ -19,7 +19,7 @@ export default {
     const embed = new EmbedBuilder()
       .setColor("Random")
       .setTitle(`Cât la sută ești ${type}?`)
-      .setDescription(`**${interaction.user.tag}** este ${percentage}% ${type}.`)
+      .setDescription(`**${interaction.user.tag}**, ești ${percentage}% ${type}! :rainbow_flag:`)
       .setThumbnail(interaction.user.displayAvatarURL());
 
     await interaction.reply({ embeds: [embed] });
