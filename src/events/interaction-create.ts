@@ -6,10 +6,10 @@ export default {
   execute: async (interaction: Interaction) => {
     if (!interaction.isChatInputCommand()) return;
     
-    const command = interaction.client.commands.get(interaction.commandName);
-    if (!command) return;
-  
     try {
+      const command = interaction.client.commands.get(interaction.commandName);
+      if (!command) return;
+      
       await command.execute(interaction);
     } catch (error) {
       console.error(error);

@@ -1,5 +1,4 @@
-import type { Interaction } from "discord.js";
-import type { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "@discordjs/builders";
+import type { Interaction, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
 export interface Command {
   data: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder;

@@ -1,19 +1,16 @@
 {
   "name": "omuletzu",
   "private": true,
-  "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node -r dotenv/config ./dist/index.js",
-    "deploy": "npm run build && node -r dotenv/config ./dist/utils/deploy-commands.js",
-    "dev": "npm run build && npm run start"
+    "dev": "npm run build && npm run start",
+    "deploy-commands": "npm run build && node -r dotenv/config ./dist/utils/deploy-commands.js",
+    "heroku-postbuild": "npm install && npm run build"
   },
   "dependencies": {
-    "@discordjs/builders": "^1.1.0",
-    "@discordjs/rest": "^1.0.1",
     "discord-api-types": "^0.37.1",
-    "discord.js": "^14.1.2",
-    "mongoose": "^6.5.1"
+    "discord.js": "^14.1.2"
   },
   "devDependencies": {
     "@types/node": "^18.6.5",

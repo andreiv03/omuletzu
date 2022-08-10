@@ -8,14 +8,18 @@ export default {
   name: "ready",
   once: true,
   execute: async (client: Client) => {
-    const commandsPath = path.join(__dirname, "..", "commands");
-    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
+    try {
+      const commandsDirectoryPath = path.join(__dirname, "..", "commands");
+      const commandFiles = fs.readdirSync(commandsDirectoryPath).filter(file => file.endsWith(".js"));
+      
+      commandFiles.forEach(async file => {
+        const { default: command } = await import(path.join(commandsDirectoryPath, file)) as { default: Command };
+        client.commands.set(command.data.name, command);
+      });
     
-    commandFiles.forEach(async file => {
-      const { default: command } = await import(path.join(commandsPath, file)) as { default: Command };
-      client.commands.set(command.data.name, command);
-    });
-  
-    console.log("Omuletzu' is online!");
+      console.log("Omuletzu' is online!");
+    } catch (error) {
+      console.error(error);
+    }
   }
 };
