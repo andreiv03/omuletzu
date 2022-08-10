@@ -19,8 +19,7 @@ const deployCommands = async () => {
     }
   
     const rest = new REST({ version: "10" }).setToken(constants.SECRET_TOKEN);
-    await rest.put(Routes.applicationGuildCommands(constants.CLIENT_ID, constants.DEV_GUILD_ID), { body: commands });
-    await rest.put(Routes.applicationCommands(constants.CLIENT_ID), { body: commands });
+    await rest.put(Routes.applicationCommands(constants.APPLICATION_ID), { body: commands });
   } catch (error) {
     console.error(error);
   }

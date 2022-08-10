@@ -19,7 +19,7 @@ export default {
     const embed = new EmbedBuilder()
       .setColor("Random")
       .setTitle(`Cât la sută ești ${type}?`)
-      .setDescription(`**${interaction.user.tag}**, ești ${percentage}% ${type}! :rainbow_flag:`)
+      .setDescription(`**${interaction.user.tag}**, ești ${percentage}% ${type}! ${type === "gay" ? ":rainbow_flag:" : ":peach:"}`)
       .setThumbnail(interaction.user.displayAvatarURL());
 
     await interaction.reply({ embeds: [embed] });
