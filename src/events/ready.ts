@@ -10,10 +10,10 @@ export default {
   execute: async (client: Client) => {
     try {
       const commandsDirectoryPath = path.join(__dirname, "..", "commands");
-      const commandFiles = fs.readdirSync(commandsDirectoryPath).filter(file => file.endsWith(".js"));
-      
-      commandFiles.forEach(async file => {
-        const { default: command } = await import(path.join(commandsDirectoryPath, file)) as { default: Command };
+      const commandFiles = fs.readdirSync(commandsDirectoryPath).filter((file) => file.endsWith(".js"));
+
+      commandFiles.forEach(async (file) => {
+        const { default: command } = (await import(path.join(commandsDirectoryPath, file))) as { default: Command };
         client.commands.set(command.data.name, command);
       });
     

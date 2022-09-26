@@ -2,19 +2,19 @@ import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.j
 
 export default {
   data: new SlashCommandBuilder()
-    .setName("iq")
-    .setDescription("Cât de mare ai IQ-ul?"),
+    .setName("gay")
+    .setDescription("Cât la sută ești gay?"),
   execute: async (interaction: CommandInteraction) => {
-    const iq = Math.floor(Math.random() * 251);
+    const percentage = Math.floor(Math.random() * 101);
 
     const embed = new EmbedBuilder()
       .setColor("Random")
-      .setTitle("Cât de mare ai IQ-ul?")
-      .setDescription(`**${interaction.user.tag}**, ai ${iq} IQ! :brain:`)
+      .setTitle("Cât la sută ești gay?")
+      .setDescription(`**${interaction.user.tag}**, ești ${percentage}% gay! :rainbow_flag:`)
       .setThumbnail(interaction.user.displayAvatarURL())
       .setFooter({
         iconURL: interaction.user.displayAvatarURL(),
-        text: `${iq} IQ`
+        text: `${percentage}% gay`
       });
 
     await interaction.reply({ embeds: [embed] });
