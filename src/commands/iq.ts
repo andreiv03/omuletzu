@@ -1,9 +1,8 @@
-import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { type CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import type { Command } from "../interfaces";
 
-export default {
-  data: new SlashCommandBuilder()
-    .setName("iq")
-    .setDescription("Cât de mare ai IQ-ul?"),
+export const command: Command = {
+  data: new SlashCommandBuilder().setName("iq").setDescription("Cât de mare ai IQ-ul?"),
   execute: async (interaction: CommandInteraction) => {
     const iq = Math.floor(Math.random() * 251);
 

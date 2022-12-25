@@ -1,9 +1,8 @@
-import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { type CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import type { Command } from "../interfaces";
 
-export default {
-  data: new SlashCommandBuilder()
-    .setName("penis")
-    .setDescription("Cât de mare ai penisul?"),
+export const command: Command = {
+  data: new SlashCommandBuilder().setName("penis").setDescription("Cât de mare ai penisul?"),
   execute: async (interaction: CommandInteraction) => {
     const centimeters = Math.floor(Math.random() * 26);
     const penis = "8" + "=".repeat(centimeters) + "D";
@@ -17,7 +16,11 @@ export default {
     const embed = new EmbedBuilder()
       .setColor("Random")
       .setTitle("Cât de mare ai penisul?")
-      .setDescription(`${reply}\n**${interaction.user.tag}**, ai ${centimeters >= 20 ? centimeters + " de" : centimeters} cm! :banana:`)
+      .setDescription(
+        `${reply}\n**${interaction.user.tag}**, ai ${
+          centimeters >= 20 ? centimeters + " de" : centimeters
+        } cm! :banana:`
+      )
       .setThumbnail(interaction.user.displayAvatarURL())
       .setFooter({
         iconURL: interaction.user.displayAvatarURL(),

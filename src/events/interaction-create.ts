@@ -1,6 +1,7 @@
 import type { Interaction } from "discord.js";
+import type { Event } from "../interfaces";
 
-export default {
+export const event: Event = {
   name: "interactionCreate",
   once: false,
   execute: async (interaction: Interaction) => {
@@ -13,6 +14,7 @@ export default {
       await command.execute(interaction);
     } catch (error) {
       console.error(error);
+
       await interaction.reply({
         content: "There was an error while executing this command!",
         ephemeral: true
