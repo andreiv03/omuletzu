@@ -1,4 +1,4 @@
-# Omuletzu' - The only Discord application template you'll ever need!
+# Omuletzu'
 
 These days it is not very easy to create a professional Discord bot that works well with TypeScript and any other package. From now on, you can use this template for any Discord application you create, and it's easy to set up!
 
