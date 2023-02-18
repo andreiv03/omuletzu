@@ -1,21 +1,17 @@
-import fs from "fs";
-import path from "path";
+import { Client, Collection, IntentsBitField } from "discord.js";
 
-import { Client, Collection, GatewayIntentBits } from "discord.js";
+import { commandsHandler } from "handlers/commands";
+import { eventsHandler } from "handlers/events";
+import { constants } from "utils/constants";
 
-import type { Event } from "./interfaces";
-import { constants } from "./utils/constants";
+const intents = new IntentsBitField();
+intents.add(IntentsBitField.Flags.Guilds);
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents });
 client.commands = new Collection();
+client.events = new Collection();
 
-const eventsDirectoryPath = path.join(__dirname, "events");
-const eventFiles = fs.readdirSync(eventsDirectoryPath).filter((file) => file.endsWith(".js"));
-
-eventFiles.forEach(async (file) => {
-  const { event }: { event: Event } = await import(path.join(eventsDirectoryPath, file));
-  if (event.once) client.once(event.name, (...args) => event.execute(...args));
-  else client.on(event.name, (...args) => event.execute(...args));
-});
+commandsHandler(client);
+eventsHandler(client);
 
 client.login(constants.SECRET_TOKEN);

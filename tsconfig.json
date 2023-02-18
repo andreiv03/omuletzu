@@ -23,10 +23,16 @@
     "baseUrl": "./src",
     "module": "CommonJS",
     "moduleResolution": "Node",
+    "paths": {
+      "commands/*": ["commands/*"],
+      "events/*": ["events/*"],
+      "types/*": ["types/*"],
+      "utils/*": ["utils/*"]
+    },
     "resolveJsonModule": true,
     "rootDir": "./src",
     "typeRoots": ["./src/types", "./node_modules/@types"],
-    
+
     "declaration": true,
     "noEmit": false,
     "outDir": "./dist",
@@ -34,10 +40,10 @@
     "removeComments": true,
     "sourceMap": true,
 
-    "allowJs": true,
-    "checkJs": true,
+    "allowJs": false,
+    "checkJs": false,
     "maxNodeModuleJsDepth": 0,
-     
+
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

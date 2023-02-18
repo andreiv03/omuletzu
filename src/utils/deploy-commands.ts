@@ -1,30 +1,30 @@
 import fs from "fs";
 import path from "path";
 
-import { REST } from "discord.js";
-import { type RESTPostAPIApplicationCommandsJSONBody, Routes } from "discord-api-types/v10";
+import { Collection, REST, Routes } from "discord.js";
 
-import { constants } from "./constants";
-import type { Command } from "../interfaces";
+import { constants } from "utils/constants";
+import type { Command } from "types/commands";
 
 const deployCommands = async () => {
   try {
-    const commands: RESTPostAPIApplicationCommandsJSONBody[] = [];
-    const commandsDirectoryPath = path.join(__dirname, "..", "commands");
-    const commandFiles = fs
-      .readdirSync(commandsDirectoryPath)
-      .filter((file) => file.endsWith(".js"));
+    const commands: Collection<string, Command> = new Collection();
 
-    for (const file of commandFiles) {
-      const { command }: { command: Command } = await import(
-        path.join(commandsDirectoryPath, file)
-      );
-      commands.push(command.data.toJSON());
+    const directoryPath = path.join(__dirname, "..", "commands");
+    const files = fs.readdirSync(directoryPath).filter((file) => file.endsWith(".js"));
+
+    for (const file of files) {
+      const { command }: { command: Command } = await import(path.join(directoryPath, file));
+      commands.set(command.data.name, command);
     }
 
     const APPLICATION_ID = "747112444253700147";
     const rest = new REST({ version: "10" }).setToken(constants.SECRET_TOKEN);
-    await rest.put(Routes.applicationCommands(APPLICATION_ID), { body: commands });
+    await rest.put(Routes.applicationCommands(APPLICATION_ID), {
+      body: [...commands.values()].map((command: Command) => command.data.toJSON())
+    });
+
+    console.log("Commands deployed successfully!");
   } catch (error) {
     console.error(error);
   }
