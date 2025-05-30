@@ -1,0 +1,22 @@
+{
+	"$schema": "https://swc.rs/schema.json",
+	"jsc": {
+		"baseUrl": "src",
+		"parser": {
+			"dynamicImport": true,
+			"syntax": "typescript",
+			"tsx": false
+		},
+		"paths": {
+			"@/*": ["./*"]
+		},
+		"target": "esnext"
+	},
+	"minify": true,
+	"module": {
+		"lazy": true,
+		"strict": true,
+		"strictMode": true,
+		"type": "commonjs"
+	}
+}

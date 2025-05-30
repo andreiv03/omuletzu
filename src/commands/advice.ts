@@ -1,34 +1,53 @@
-import axios from "axios";
-import { type CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import {
+	type ColorResolvable,
+	type CommandInteraction,
+	EmbedBuilder,
+	SlashCommandBuilder,
+} from "discord.js";
 
-import type { Command } from "types/commands";
-import { constants } from "utils/constants";
+import axios from "@/config/axios";
+import { ENV } from "@/config/constants";
+import type { Command } from "@/types/command";
 
-interface Advice {
-  advice: string;
-  id: string;
+interface AdviceResponse {
+	slip: {
+		advice: string;
+		id: number;
+	};
 }
 
-const data = new SlashCommandBuilder();
-data.setName("advice");
-data.setDescription("Generate a random advice.");
+const TAG = "[ADVICE_COMMAND]";
+
+const data = new SlashCommandBuilder()
+	.setName("advice")
+	.setDescription("Generate a random piece of advice.");
 
 export const command: Command = {
-  data,
-  run: async (interaction: CommandInteraction) => {
-    const ADVICE_SLIP_API = "https://api.adviceslip.com/advice";
-    const response = await axios.get(ADVICE_SLIP_API);
-    const advice: Advice = { ...response.data.slip };
+	data,
+	run: async (interaction: CommandInteraction) => {
+		const ADVICE_API_URL = "https://api.adviceslip.com/advice";
 
-    const embed = new EmbedBuilder();
-    embed.setColor(constants.ACCENT_COLOR);
-    embed.setTitle("Advice Generator");
-    embed.setDescription(`${advice.advice}`);
-    embed.setFooter({
-      iconURL: interaction.user.displayAvatarURL(),
-      text: `Advice #${advice.id}`
-    });
+		try {
+			const { data } = await axios.get<AdviceResponse>(ADVICE_API_URL);
+			const advice = data.slip;
 
-    await interaction.reply({ embeds: [embed] });
-  }
+			const embed = new EmbedBuilder()
+				.setColor(ENV.ACCENT_COLOR as ColorResolvable)
+				.setTitle("🧠 Advice Generator")
+				.setDescription(advice.advice)
+				.setFooter({
+					iconURL: interaction.user.displayAvatarURL(),
+					text: `Advice #${advice.id}`,
+				});
+
+			await interaction.reply({ embeds: [embed] });
+		} catch (error) {
+			console.error(`${TAG} Failed to fetch advice:`, error);
+
+			await interaction.reply({
+				content: "Sorry, I couldn't fetch an advice right now. Try again later!",
+				ephemeral: true,
+			});
+		}
+	},
 };

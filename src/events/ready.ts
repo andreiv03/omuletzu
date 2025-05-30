@@ -1,9 +1,15 @@
-import type { Event } from "types/events";
+import type { Client } from "discord.js";
+import type { Event } from "@/types/event";
 
-export const event: Event = {
-  name: "ready",
-  once: true,
-  run: async () => {
-    console.log("Omuletzu' is online!");
-  }
+const TAG = "[READY_EVENT]";
+
+export const event: Event<"ready"> = {
+	name: "ready",
+	once: true,
+	run: async (client: Client<true>) => {
+		const userTag = client.user.tag ?? "unknown bot";
+		const guildCount = client.guilds.cache.size;
+
+		console.log(`${TAG} ${userTag} is online and connected to ${guildCount} server(s).`);
+	},
 };

@@ -1,33 +1,54 @@
+import { REST, Routes } from "discord.js";
 import fs from "fs";
 import path from "path";
 
-import { Collection, REST, Routes } from "discord.js";
+import { ENV } from "@/config/constants";
+import type { Command } from "@/types/command";
 
-import { constants } from "utils/constants";
-import type { Command } from "types/commands";
+const TAG = "[DEPLOY_COMMANDS]";
 
 const deployCommands = async () => {
-  try {
-    const commands: Collection<string, Command> = new Collection();
+	try {
+		const commandsDir = path.resolve(__dirname, "../commands");
+		const files: string[] = [];
+		const commands: Command[] = [];
 
-    const directoryPath = path.join(__dirname, "..", "commands");
-    const files = fs.readdirSync(directoryPath).filter((file) => file.endsWith(".js"));
+		try {
+			// Safe: reading internal build directory, not user input
+			// eslint-disable-next-line security/detect-non-literal-fs-filename
+			const filesDir = fs.readdirSync(commandsDir);
+			files.push(...filesDir.filter((file) => file.endsWith(".js")));
+		} catch {
+			console.warn(`${TAG} Directory not found or unreadable: ${commandsDir}`);
+			return;
+		}
 
-    for (const file of files) {
-      const { command }: { command: Command } = await import(path.join(directoryPath, file));
-      commands.set(command.data.name, command);
-    }
+		for (const file of files) {
+			try {
+				const { command }: { command: Command } = await import(path.join(commandsDir, file));
 
-    const APPLICATION_ID = "747112444253700147";
-    const rest = new REST({ version: "10" }).setToken(constants.SECRET_TOKEN);
-    await rest.put(Routes.applicationCommands(APPLICATION_ID), {
-      body: [...commands.values()].map((command: Command) => command.data.toJSON())
-    });
+				if (!command.data.name || typeof command.run !== "function") {
+					console.warn(`${TAG} Skipped invalid command: ${file}`);
+					continue;
+				}
 
-    console.log("Commands deployed successfully!");
-  } catch (error) {
-    console.error(error);
-  }
+				commands.push(command);
+				console.log(`${TAG} Loaded command: /${command.data.name}`);
+			} catch (error) {
+				console.error(`${TAG} Failed to load ${file}:`, error);
+			}
+		}
+
+		const rest = new REST({ version: "10" }).setToken(ENV.SECRET_TOKEN);
+
+		await rest.put(Routes.applicationCommands(ENV.APPLICATION_ID), {
+			body: commands.map((command) => command.data.toJSON()),
+		});
+
+		console.log(`${TAG} Deployed ${commands.length} command(s) globally.`);
+	} catch (error) {
+		console.error(`${TAG} Deployment failed:`, error);
+	}
 };
 
 deployCommands();
